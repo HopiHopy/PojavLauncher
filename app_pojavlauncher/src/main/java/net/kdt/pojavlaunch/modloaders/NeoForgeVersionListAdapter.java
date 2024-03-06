@@ -33,13 +33,13 @@ public class NeoForgeVersionListAdapter extends BaseExpandableListAdapter implem
                 dashIndex = version.indexOf("-");
                 gameVersion = version.substring(0, dashIndex); // "1.20.1"
             } else if (version.equals("47.1.82")) {
-                gameVersion = "1.20.1" + version;
+                gameVersion = "1.20.1";
                 List<String> versionList;
                 int gameVersionIndex = mGameVersions.indexOf(gameVersion);
                 if(gameVersionIndex != -1) versionList = mNeoForgeVersions.get(gameVersionIndex);
                 else {
                     versionList = new ArrayList<>();
-                    mGameVersions.add(gameVersion);
+                    mGameVersions.add(gameVersion + "-47.1.82");
                     mNeoForgeVersions.add(versionList);
                 }
                 versionList.add(version);
