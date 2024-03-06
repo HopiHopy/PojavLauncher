@@ -39,7 +39,7 @@ public class NeoForgeVersionListAdapter extends BaseExpandableListAdapter implem
                 if(gameVersionIndex != -1) versionList = mNeoForgeVersions.get(gameVersionIndex);
                 else {
                     versionList = new ArrayList<>();
-                    mGameVersions.add(gameVersion + "-47.1.82");
+                    mGameVersions.add("47.1.82");
                     mNeoForgeVersions.add(versionList);
                 }
                 versionList.add(version);
