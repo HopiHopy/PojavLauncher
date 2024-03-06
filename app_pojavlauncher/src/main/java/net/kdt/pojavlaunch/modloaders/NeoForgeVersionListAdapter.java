@@ -42,6 +42,8 @@ public class NeoForgeVersionListAdapter extends BaseExpandableListAdapter implem
                     mGameVersions.add(gameVersion);
                     mNeoForgeVersions.add(versionList);
                 }
+                versionList.add(version);
+                continue;
             }
             List<String> versionList;
             int gameVersionIndex = mGameVersions.indexOf(gameVersion);
