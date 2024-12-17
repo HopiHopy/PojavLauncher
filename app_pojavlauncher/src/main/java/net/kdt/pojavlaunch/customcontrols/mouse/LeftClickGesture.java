@@ -17,7 +17,7 @@ public class LeftClickGesture extends ValidatorGesture {
     private boolean mMouseActivated;
 
     public LeftClickGesture(Handler handler) {
-        super(handler, LauncherPreferences.PREF_LONGPRESS_TRIGGER);
+        super(handler);
     }
 
     public final void inputEvent() {
@@ -25,6 +25,11 @@ public class LeftClickGesture extends ValidatorGesture {
             mGestureStartX = mGestureEndX = CallbackBridge.mouseX;
             mGestureStartY = mGestureEndY = CallbackBridge.mouseY;
         }
+    }
+
+    @Override
+    protected int getDelayValue() {
+        return LauncherPreferences.PREF_LONGPRESS_TRIGGER;
     }
 
     @Override

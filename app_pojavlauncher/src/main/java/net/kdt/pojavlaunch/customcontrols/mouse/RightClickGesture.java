@@ -6,12 +6,12 @@ import net.kdt.pojavlaunch.LwjglGlfwKeycode;
 
 import org.lwjgl.glfw.CallbackBridge;
 
-public class RightClickGesture extends ValidatorGesture{
+public class RightClickGesture extends ValidatorGesture {
     private boolean mGestureEnabled = true;
     private boolean mGestureValid = true;
     private float mGestureStartX, mGestureStartY, mGestureEndX, mGestureEndY;
     public RightClickGesture(Handler mHandler) {
-        super(mHandler, 150);
+        super(mHandler);
     }
 
     public final void inputEvent() {
@@ -27,6 +27,11 @@ public class RightClickGesture extends ValidatorGesture{
     public void setMotion(float deltaX, float deltaY) {
         mGestureEndX += deltaX;
         mGestureEndY += deltaY;
+    }
+
+    @Override
+    protected int getDelayValue() {
+        return 150;
     }
 
     @Override
