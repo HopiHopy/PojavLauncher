@@ -15,6 +15,7 @@ import org.apache.commons.io.*;
 @SuppressWarnings("IOStreamConstructor")
 public class DownloadUtils {
     public static final String USER_AGENT = Tools.APP_NAME;
+    private static final int TIME_OUT = 10000;
 
     public static void download(String url, OutputStream os) throws IOException {
         download(new URL(url), os);
@@ -26,7 +27,8 @@ public class DownloadUtils {
             // System.out.println("Connecting: " + url.toString());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestProperty("User-Agent", USER_AGENT);
-            conn.setConnectTimeout(10000);
+            conn.setConnectTimeout(TIME_OUT);
+            conn.setReadTimeout(TIME_OUT);
             conn.setDoInput(true);
             conn.connect();
             if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -35,6 +37,8 @@ public class DownloadUtils {
             }
             is = conn.getInputStream();
             IOUtils.copy(is, os);
+        } catch (SocketTimeoutException e) {
+            throw new IOException("Download timed out: " + url, e);
         } catch (IOException e) {
             throw new IOException("Unable to download from " + url, e);
         } finally {
@@ -67,6 +71,8 @@ public class DownloadUtils {
         FileUtils.ensureParentDirectory(outputFile);
 
         HttpURLConnection conn = (HttpURLConnection) new URL(urlInput).openConnection();
+        conn.setConnectTimeout(TIME_OUT);
+        conn.setReadTimeout(TIME_OUT);
         InputStream readStr = conn.getInputStream();
         try (FileOutputStream fos = new FileOutputStream(outputFile)) {
             int current;
@@ -81,8 +87,9 @@ public class DownloadUtils {
                 monitor.updateProgress(overall, length);
             }
             conn.disconnect();
+        } catch (SocketTimeoutException e) {
+            throw new IOException("Download timed out: " + urlInput, e);
         }
-
     }
 
     public static <T> T downloadStringCached(String url, String cacheName, ParseCallback<T> parseCallback) throws IOException, ParseException{
